@@ -3,6 +3,10 @@ from bs4 import BeautifulSoup
 import json
 from urllib.parse import urljoin
 from collections import deque
+import os
+
+# Obtener la ruta actual del script
+current_dir = os.path.dirname(os.path.realpath(__file__))
 
 # Función para extraer enlaces de una página
 def extract_links(url):
@@ -50,8 +54,9 @@ def web_crawler(start_url, max_pages=10, max_depth=2):
                 if link not in visited:
                     queue.append((link, depth + 1))
 
-    # Guardar los datos en un archivo JSON
-    with open("output.json", "w", encoding="utf-8") as f:
+    # Guardar los datos en un archivo JSON en la misma carpeta del script
+    output_file = os.path.join(current_dir, "output.json")
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=True, indent=4)
 
     # Imprimir los datos guardados
@@ -60,4 +65,5 @@ def web_crawler(start_url, max_pages=10, max_depth=2):
 
 # URL inicial para el crawler
 start_url = "https://www.fundacioncva.cl/?gad_source=1&gclid=Cj0KCQjwgJyyBhCGARIsAK8LVLPaMRLTK2WfhaWQ-4eYFtiSjDcjwONtCRS7eVwGJnP9ILuRmxx3QNEaAqpUEALw_wcB"
-web_crawler(start_url, max_pages=1, max_depth=2)
+
+web_crawler(start_url, max_pages=5, max_depth=2)
