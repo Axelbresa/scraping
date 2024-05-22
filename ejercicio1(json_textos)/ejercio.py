@@ -66,4 +66,4 @@ def web_crawler(start_url, max_pages=10, max_depth=2):
 # URL inicial para el crawler
 start_url = "https://www.fundacioncva.cl/?gad_source=1&gclid=Cj0KCQjwgJyyBhCGARIsAK8LVLPaMRLTK2WfhaWQ-4eYFtiSjDcjwONtCRS7eVwGJnP9ILuRmxx3QNEaAqpUEALw_wcB"
 
-web_crawler(start_url, max_pages=5, max_depth=2)
+web_crawler(start_url, max_pages=3, max_depth=2)
