@@ -8,9 +8,18 @@ def getdata(url):
     r = requests.get(url)
     return r.text
 
-htmldata = getdata("https://www.geeksforgeeks.org/")
+def parsearHtml():
+    htmldata = getdata("https://www.geeksforgeeks.org/")
+    soup = BeautifulSoup(htmldata, 'html.parser')
+    valid_extensions = ['.png', '.jpg', '.jpeg', '.webp']
+    img_extension(soup, valid_extensions)
 
-soup = BeautifulSoup(htmldata, 'html.parser')
+
+def img_extension(soup, valid_extensions):
+    for item in soup.find_all('img'):
+        src = item.get('src', '')
+        if any(src.lower().endswith(ext) for ext in valid_extensions):
+            download_image(src)
 
 def download_image(url, folder="./ejercio2(img)/imagenes"):
     try:
@@ -25,9 +34,4 @@ def download_image(url, folder="./ejercio2(img)/imagenes"):
     except Exception as e:
         print(f"No se pudo descargar {url}. Error: {e}")
 
-valid_extensions = ['.png', '.jpg', '.jpeg', '.webp']
-for item in soup.find_all('img'):
-    src = item.get('src', '')
-    if any(src.lower().endswith(ext) for ext in valid_extensions):
-        download_image(src)
-
+parsearHtml()
